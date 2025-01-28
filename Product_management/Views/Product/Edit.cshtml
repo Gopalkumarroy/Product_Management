@@ -1,0 +1,68 @@
+﻿@model Product_management.Models.Product
+
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger">@TempData["msg"]</div>
+}
+
+@if (TempData["MessageUPdate"] != null)
+{
+    var messageType = TempData["MessageType"]?.ToString() ?? "info"; // Default to 'info' type
+
+    <div id="tempMessage" class="alert alert-@(messageType)" role="alert">
+        @TempData["MessageUPdate"]
+    </div>
+}
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div>
+    @*<div>
+            <label for="ProductId">Product Id</label>
+            @Html.TextBoxFor(model => model.ProductId, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div>
+            <label for="CategoryId">Category Id</label>
+            @Html.TextBoxFor(model => model.CategoryId, new { @class = "form-control", required = "required" })
+        </div>*@
+    <input id="ProductId" name="ProductId" type="hidden" value="@Model.ProductId" />
+
+    <div>
+        <label for="ProductName">Product Name</label>
+        @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control", required = "required" })
+    </div>
+
+    <div>
+        <span>Product Categories:</span>
+
+        @Html.DropDownListFor(model => model.CategoryId, Model.Categories, "Select a Category", new { @class = "form-control" })
+    </div>
+
+    <br />
+
+    <div>
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</div>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Hide the message after 5 seconds (5000 milliseconds)
+    setTimeout(function () {
+        //$("#tempMessage").fadeOut("slow");
+        if ($("#tempMessage").length) {
+            window.location.href = '@Url.Action("ViewPage", "Product")';
+        }
+    }, 3000);
+</script>
+

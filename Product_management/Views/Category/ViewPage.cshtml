@@ -1,0 +1,66 @@
+﻿@model Product_management.Models.Category
+@{
+    ViewBag.Title = "ViewPage";
+}
+
+@if (TempData["Message"] != null)
+{
+    var messageType = TempData["MessageType"]?.ToString() ?? "info"; // Default to 'info' type
+
+    <div id="tempMessage" class="alert alert-@(messageType)" role="alert">
+        @TempData["Message"]
+    </div>
+}
+
+<script src="~/js/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#searchBox").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+<div class="container">
+    <h2>View Category</h2>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>CategoryId</th>*@
+                <th>CategoryName</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            @foreach (var item in Model.Categories)
+            {
+                <tr>
+                    @*<td>@item.CategoryId</td>*@
+                    <td>@item.CategoryName</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Category", new { id = item.CategoryId})" class="btn btn-info">Edit</a>
+                        <a href="@Url.Action("DetailPage", "Category", new { id = item.CategoryId})" class="btn btn-success">Details</a>
+                        <a href="@Url.Action("Delete", "Category", new { id = item.CategoryId})" class="btn btn-danger">Delete</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Hide the message after 2 seconds (2000 milliseconds)
+    setTimeout(function () {
+        $("#tempMessage").fadeOut("slow");
+    }, 2000);
+</script>
+

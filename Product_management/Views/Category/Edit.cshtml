@@ -1,0 +1,65 @@
+﻿
+@model Product_management.Models.Category
+@{
+    ViewBag.Title = "Edit";
+}
+
+@if (TempData["MessageUPdate"] != null)
+{
+    var messageType = TempData["MessageType"]?.ToString() ?? "info"; // Default to 'info' type
+
+    <div id="tempMessage" class="alert alert-@(messageType)" role="alert">
+        @TempData["MessageUPdate"]
+    </div>
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Category", FormMethod.Post))
+{
+
+
+
+    <div class="form-horizontal">
+        <h4>Update Categories</h4>
+        <hr />
+
+
+
+
+        <div class="form-group">
+            <input id="CategoryId" name="CategoryId" type="hidden" value="@Model.CategoryId" />
+
+            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CategoryName, new { @class = "form-control" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+
+    <p>@TempData["msg"]</p>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Hide the message after 3 seconds (3000 milliseconds)
+    setTimeout(function () {
+        //$("#tempMessage").fadeOut("slow");
+        if ($("#tempMessage").length) {
+            window.location.href = '@Url.Action("ViewPage", "Category")';
+        }
+    }, 3000);
+</script>
+

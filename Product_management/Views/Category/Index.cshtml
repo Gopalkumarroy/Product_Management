@@ -1,0 +1,42 @@
+﻿@model Product_management.Models.Category
+
+@if (TempData["MessageUPdate"] != null)
+{
+    var messageType = TempData["MessageType"]?.ToString() ?? "info"; // Default to 'info' type
+
+    <div id="tempMessage" class="alert alert-@(messageType)" role="alert">
+        @TempData["MessageUPdate"]
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <h2>Add Category</h2>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="bg-white p-5 contact-form">
+                    <div class="form-group">
+                        <span>CategoryName:</span>
+                        @Html.TextBoxFor(model => model.CategoryName, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Add Category" class="btn btn-primary py-3 px-5">
+                    </div>
+                </div>
+                <h3 style="color:red;">@TempData["msg"]</h3>
+            </div>
+        </div>
+    </div>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Hide the message after 5 seconds (5000 milliseconds)
+    setTimeout(function () {
+        //$("#tempMessage").fadeOut("slow");
+        if ($("#tempMessage").length) {
+            window.location.href = '@Url.Action("ViewPage", "Category")';
+        }
+    }, 3000);
+</script>
